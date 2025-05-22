@@ -1,0 +1,220 @@
+/* Modern CSS with Interactive Elements */
+:root {
+    /* Light Mode Defaults */
+    --primary: #4361ee;
+    --secondary: #3f37c9;
+    --accent: #4cc9f0;
+    --success: #4ade80;
+    --error: #f87171;
+    --text: #2b2d42;
+    --text-light: #4a5568;
+    --bg: #f8f9fa;
+    --bg-secondary: #ffffff;
+    --border: #e2e8f0;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  
+    /* Dark Mode Defaults */
+    --dark-primary: #6366f1;
+    --dark-secondary: #818cf8;
+    --dark-accent: #60a5fa;
+    --dark-success: #34d399;
+    --dark-error: #f87171;
+    --dark-text: #e2e8f0;
+    --dark-text-light: #a0aec0;
+    --dark-bg: #1a202c;
+    --dark-bg-secondary: #2d3748;
+    --dark-border: #4a5568;
+    --dark-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+  
+    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+  
+  /* Dark Mode Class */
+  .dark-mode {
+    --primary: var(--dark-primary);
+    --secondary: var(--dark-secondary);
+    --accent: var(--dark-accent);
+    --success: var(--dark-success);
+    --error: var(--dark-error);
+    --text: var(--dark-text);
+    --text-light: var(--dark-text-light);
+    --bg: var(--dark-bg);
+    --bg-secondary: var(--dark-bg-secondary);
+    --border: var(--dark-border);
+    --shadow: var(--dark-shadow);
+  }
+  
+  /* Dark Mode Toggle Switch */
+  .dark-mode-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+  }
+  
+  .toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
+  
+  .toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--border);
+    transition: var(--transition);
+    border-radius: 34px;
+  }
+  
+  .toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: var(--bg-secondary);
+    transition: var(--transition);
+    border-radius: 50%;
+  }
+  
+  input:checked + .toggle-slider {
+    background-color: var(--primary);
+  }
+  
+  input:checked + .toggle-slider:before {
+    transform: translateX(26px);
+  }
+  
+  /* Base Styles */
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+    line-height: 1.6;
+    color: var(--text);
+    background-color: var(--bg);
+    min-height: 100vh;
+    transition: var(--transition);
+  }
+  
+  /* Header */
+  h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.8rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    position: relative;
+  }
+  
+  h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    border-radius: 2px;
+  }
+  
+  /* Form Elements */
+  input[type="file"],
+  input[type="text"] {
+    background-color: var(--bg-secondary);
+    color: var(--text);
+    border: 2px solid var(--border);
+  }
+  
+  /* Cards */
+  .stats {
+    background: var(--bg-secondary);
+    box-shadow: var(--shadow);
+  }
+  
+  /* Alerts */
+  .alert {
+    background-color: var(--bg-secondary);
+  }
+  
+  /*new*/
+  /* Add this to your existing CSS file */
+
+#loading {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  body {
+      padding: 1rem;
+  }
+  h1 {
+      font-size: 2rem;
+  }
+}
+
+/* Success and Error Messages */
+.alert-success {
+  background-color: var(--success);
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.alert-error {
+  background-color: var(--error);
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+/* Dark Mode Toggle Animation */
+.toggle-slider {
+  transition: background-color var(--transition);
+}
+
+input:checked + .toggle-slider {
+  background-color: var(--primary);
+  transition: background-color var(--transition);
+}
+
+/* Loading Animation */
+#loading {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+      opacity: 1;
+  }
+  50% {
+      opacity: 0.5;
+  }
+  100% {
+      opacity: 1;
+  }
+}
+
+  

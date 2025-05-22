@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dataset Balancer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Dark Mode Toggle -->
+    <div class="dark-mode-toggle">
+        <label class="toggle-switch">
+            <input type="checkbox" id="darkModeToggle">
+            <span class="toggle-slider"></span>
+        </label>
+    </div>
+
+    <h1>Dataset Balancer</h1>
+    
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                {% if 'error' in message %}
+                    <div class="alert alert-error">{{ message }}</div>
+                {% else %}
+                    <div class="alert alert-success">{{ message }}</div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    
+    <form method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="file">Upload Dataset (CSV or Excel):</label>
+            <input type="file" name="file" id="file" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="target_column">Target Column Name:</label>
+            <input type="text" name="target_column" id="target_column" value="{{ target_column if target_column else 'target' }}" required>
+        </div>
+        
+        <button type="submit" id="submitBtn">Process Dataset</button>
+        <div id="loading" style="display:none;">Processing...</div>
+    </form>
+    
+    {% if original_shape %}
+    <div class="stats">
+        <h3>Original Dataset Info:</h3>
+        <p>Shape: {{ original_shape }}</p>
+        <p>Class Distribution: {{ original_dist }}</p>
+        
+        {% if processed_file %}
+        <p>
+            <a href="{{ url_for('download_file', filename=processed_file) }}" class="button">
+                Download Balanced Dataset
+            </a>
+        </p>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <script>
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        const submitBtn = document.getElementById('submitBtn');
+        const loadingDiv = document.getElementById('loading');
+        
+        // Check for saved preference or system preference
+        if (localStorage.getItem('darkMode') === 'enabled' || 
+            (localStorage.getItem('darkMode') !== 'disabled' && prefersDarkScheme.matches)) {
+            document.body.classList.add('dark-mode');
+            darkModeToggle.checked = true;
+        }
+        
+        // Toggle dark mode
+        darkModeToggle.addEventListener('change', function() {
+            if (this.checked) {
+                document.body.classList.add('dark-mode');
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                document.body.classList.remove('dark-mode');
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        });
+        
+        // Show loading animation on form submission
+        document.addEventListener('submit', function(event) {
+            if (event.target.tagName === 'FORM') {
+                submitBtn.disabled = true;
+                loadingDiv.style.display = 'block';
+            }
+        });
+        
+        // Hide loading animation when page loads
+        window.addEventListener('load', function() {
+            submitBtn.disabled = false;
+            loadingDiv.style.display = 'none';
+        });
+    </script>
+</body>
+</html>

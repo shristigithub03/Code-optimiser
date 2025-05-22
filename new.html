@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEVMATE - Developer Toolkit</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .button-style {
+            background-color: #4CAF50; /* Green background */
+            color: white; /* White text */
+            padding: 12px 20px; /* Padding */
+            border: none; /* Remove borders */
+            border-radius: 4px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+            font-size: 16px; /* Font size */
+            transition: background-color 0.3s ease; /* Smooth background color transition */
+        }
+
+        /* Button Hover Effect */
+        .button-style:hover {
+            background-color: #45a049; /* Slightly darker green on hover */
+        }
+
+        /* Button Focus Effect */
+        .button-style:focus {
+            outline: none; /* Remove default outline */
+            box-shadow: 0 0 5px rgba(72, 227, 128, 0.8); /* Green glow on focus */
+        }
+        .b2 {
+            background-color: #4CAF50; /* Green background */
+            color: white; /* White text */
+            padding: 12px 20px; /* Padding */
+            border: none; /* Remove borders */
+            border-radius: 4px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+            font-size: 16px; /* Font size */
+            transition: background-color 0.3s ease; /* Smooth background color transition */
+        }
+
+        /* Button Hover Effect */
+        .b2:hover {
+            background-color: #45a049; /* Slightly darker green on hover */
+        }
+
+        /* Button Focus Effect */
+        .b2:focus {
+            outline: none; /* Remove default outline */
+            box-shadow: 0 0 5px rgba(72, 227, 128, 0.8); /* Green glow on focus */
+        }
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --accent: #00cec9;
+            --dark: #0f172a;
+            --darker: #0b1120;
+            --light: #f5f6fa;
+            --code-bg: #1e293b;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --danger: #d63031;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(108, 92, 231, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(0, 206, 201, 0.1) 0%, transparent 20%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo i {
+            font-size: 2.5rem;
+            color: var(--primary);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-btn {
+            background: transparent;
+            color: var(--light);
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: rgba(108, 92, 231, 0.2);
+            color: var(--primary);
+        }
+
+        .about-btn {
+            background: rgba(0, 206, 201, 0.2);
+            color: var(--accent);
+        }
+
+        .about-btn:hover {
+            background: rgba(0, 206, 201, 0.4);
+        }
+
+        .tool-container {
+            display: none;
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .tool-container.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .tool-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tool-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .code-editor {
+            width: 100%;
+            min-height: 200px;
+            background: var(--code-bg);
+            border-radius: 8px;
+            padding: 1rem;
+            color: #abb2bf;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            resize: vertical;
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(108, 92, 231, 0.6);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .result-container {
+            margin-top: 1.5rem;
+        }
+
+        .result-title {
+            font-size: 1.2rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .result-content {
+            background: var(--code-bg);
+            border-radius: 8px;
+            padding: 1rem;
+            min-height: 100px;
+            overflow-x: auto;
+        }
+
+        .about-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .about-content {
+            background: var(--darker);
+            width: 80%;
+            max-width: 800px;
+            border-radius: 12px;
+            padding: 2rem;
+            position: relative;
+            border: 1px solid var(--primary);
+        }
+
+        .close-about {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: transparent;
+            color: var(--light);
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .team-member {
+            background: var(--code-bg);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .team-member img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 0.5rem;
+            border: 2px solid var(--primary);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .about-content {
+                width: 95%;
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-robot"></i>
+                <h1>DEVMATE</h1>
+            </div>
+            <nav>
+                <button class="nav-btn active" data-tool="code-optimizer">
+                    <i class="fas fa-bolt"></i> Code Optimizer
+                </button>
+                <a href="https://dataset-genesis-lab.lovable.app/" class="nav-btn">
+                    <i class="fas fa-balance-scale"></i> Data Genesis Lab
+                </a>
+                
+                <a href="https://dataset-balancer.onrender.com/" class="nav-btn">
+                    <i class="fas fa-balance-scale"></i> Data Balancer
+                </a>
+                <button class="nav-btn about-btn" id="about-btn">
+                    <i class="fas fa-info-circle"></i> About Us
+                </button>
+            </nav>
+        </header>
+
+        <!-- Code Optimizer Tool -->
+        <div class="tool-container active" id="code-optimizer">
+            <div class="tool-header">
+                <h2 class="tool-title"><i class="fas fa-bolt"></i> Code Optimizer</h2>
+                <select id="optimizer-language" class="language-selector">
+                    <option value="python">Python</option>
+                    <option value="js">JavaScript</option>
+                    <option value="cpp">C++</option>
+                    <option value="java">Java</option>
+                </select>
+            </div>
+            <textarea id="code-input" class="code-editor" placeholder="Paste your code here..."></textarea>
+            <button class="btn pulse" id="optimize-btn">
+                <i class="fas fa-magic"></i> Optimize Code
+            </button>
+            
+            <div class="result-container">
+                <h3 class="result-title"><i class="fas fa-rocket"></i> Optimized Code</h3>
+                <pre id="optimized-code" class="code-editor result-content">// Your optimized code will appear here...</pre>
+            </div>
+            
+            <div class="metrics">
+                <div class="metric">
+                    <span class="metric-label">Time Complexity:</span>
+                    <span id="time-complexity">O(n²) → O(n log n)</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Space Complexity:</span>
+                    <span id="space-complexity">O(n) → O(1)</span>
+                </div>
+            </div>
+        </div>
+
+        
+  
+  <!-- 🔧 Data Generator Tool -->
+  <!-- 📌 Navigation Links -->
+
+
+
+
+  
+
+
+        
+
+    <!-- About Us Modal -->
+    <div class="about-modal" id="about-modal">
+        <div class="about-content">
+            <button class="close-about" id="close-about">&times;</button>
+            <h2><i class="fas fa-info-circle"></i> About DEVMATE</h2>
+            <p>1. 🔍 Code Understanding & Analysis
+                Helps understand what a piece of code is doing.
+                
+                Identifies inefficiencies, errors, or bugs.
+                
+                Suggests optimizations (better logic, time/space complexity).
+                
+                2. ⚡ Increases Productivity
+                Automates repetitive tasks (like writing boilerplate code).
+                
+                Helps you generate code snippets, documentation, and tests instantly.
+                
+                Allows you to focus more on logic and architecture.
+                
+                3. 🤖 Real-time Code Suggestions
+                Autocomplete or recommend better syntax.
+                
+                Suggests libraries or functions based on your current task.
+                
+                4. 🧠 Learning Assistant
+                Explains tough code, algorithms, or error messages.
+                
+                Helps new developers or students (like us) to learn-by-doing.
+                
+                5. 🧪 Testing & Debugging
+                Can help generate test cases and even debug your code.
+                
+                Detects edge cases you might miss.
+                
+                6. 🛠️ Software Maintenance
+                Refactors and cleans up old or legacy code.
+                
+                Ensures consistency and follows best practices.</p>
+            
+            <h3 style="margin-top: 1.5rem;"><i class="fas fa-lightbulb"></i> Features</h3>
+            <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                <li>AI-powered code optimization</li>
+                <li>Smart data generation</li>
+                <li>Advanced data balancing</li>
+                <li>Multi-language support</li>
+                <li>Developer-friendly interface</li>
+            </ul>
+            
+            <h3 style="margin-top: 1.5rem;"><i class="fas fa-users"></i> Our Team</h3>
+            <div class="team-grid">
+                <div class="team-member">
+                    
+                    <h4>SHRISTI SINGH</h4>
+                    <p>CODE OPTIMIZER</p>
+                </div>
+                <div class="team-member">
+                    
+                    <h4>DISHA CHAKRABORTY</h4>
+                    <p>DATASET GENERATOR</p>
+                </div>
+                <div class="team-member">
+                    
+                    
+                    
+                    <h4>ANUSKA TRIPATHI</h4>
+                    <p>DATA BALANCER</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 2rem; text-align: center;">
+                <p>© 2023 DEVMATE | All Rights Reserved</p>
+                <div style="margin-top: 1rem;">
+                    <i class="fas fa-envelope" style="margin: 0 0.5rem;"></i>
+                    <i class="fab fa-github" style="margin: 0 0.5rem;"></i>
+                    <i class="fab fa-twitter" style="margin: 0 0.5rem;"></i>
+                    <i class="fab fa-linkedin" style="margin: 0 0.5rem;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tool navigation
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            if (btn.id !== 'about-btn') {
+                btn.addEventListener('click', () => {
+                    // Remove active class from all buttons and containers
+                    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.tool-container').forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to clicked button and corresponding container
+                    btn.classList.add('active');
+                    const toolId = btn.getAttribute('data-tool');
+                    document.getElementById(toolId).classList.add('active');
+                });
+            }
+        });
+
+        // About modal
+        const aboutBtn = document.getElementById('about-btn');
+        const aboutModal = document.getElementById('about-modal');
+        const closeAbout = document.getElementById('close-about');
+
+        aboutBtn.addEventListener('click', () => {
+            aboutModal.style.display = 'flex';
+        });
+
+        closeAbout.addEventListener('click', () => {
+            aboutModal.style.display = 'none';
+        });
+
+        // Close modal when clicking outside
+        aboutModal.addEventListener('click', (e) => {
+            if (e.target === aboutModal) {
+                aboutModal.style.display = 'none';
+            }
+        });
+
+        // Code Optimizer Functionality
+        document.getElementById('optimize-btn').addEventListener('click', async () => {
+            const code = document.getElementById('code-input').value;
+            const language = document.getElementById('optimizer-language').value;
+            
+            const btn = document.getElementById('optimize-btn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Optimizing...';
+            btn.classList.remove('pulse');
+            
+            try {
+                // Simulate API call with timeout
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                // Mock optimization results
+                const mockOptimizations = {
+                    python: {
+                        code: `# Optimized Python Code\n${code}\n\n# Changes made:\n# - Improved loop structure\n# - Reduced time complexity\n# - Optimized memory usage`,
+                        time: "O(n²) → O(n log n)",
+                        space: "O(n) → O(1)"
+                    },
+                    js: {
+                        code: `// Optimized JavaScript Code\n${code}\n\n// Changes made:\n// - Used more efficient algorithms\n// - Reduced redundant operations\n// - Improved variable scoping`,
+                        time: "O(n³) → O(n²)",
+                        space: "O(n²) → O(n)"
+                    },
+                    cpp: {
+                        code: `// Optimized C++ Code\n${code}\n\n// Changes made:\n// - Used references instead of copies\n// - Optimized memory allocation\n// - Improved cache locality`,
+                        time: "O(n²) → O(n)",
+                        space: "O(n) → O(1)"
+                    },
+                    java: {
+                        code: `// Optimized Java Code\n${code}\n\n// Changes made:\n// - Used more efficient collections\n// - Reduced object creation\n// - Improved algorithm selection`,
+                        time: "O(n²) → O(n log n)",
+                        space: "O(n) → O(log n)"
+                    }
+                };
+                
+                const result = mockOptimizations[language] || mockOptimizations.python;
+                
+                document.getElementById('optimized-code').textContent = result.code;
+                document.getElementById('time-complexity').textContent = result.time;
+                document.getElementById('space-complexity').textContent = result.space;
+                
+            } catch (error) {
+                document.getElementById('optimized-code').textContent = `Error: ${error.message}`;
+            } finally {
+                btn.innerHTML = originalText;
+                btn.classList.add('pulse');
+            }
+        });
+
+        // Data Generator Functionality
+        document.getElementById('generate-data-btn').addEventListener('click', async () => {
+            const dataType = document.getElementById('data-type').value;
+            const rows = document.getElementById('data-rows').value;
+            const schema = document.getElementById('data-schema').value;
+            
+            const btn = document.getElementById('generate-data-btn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
+            btn.classList.remove('pulse');
+            
+            try {
+                // Simulate API call with timeout
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                // Mock data generation
+                let mockData = '';
+                if (dataType === 'json') {
+                    mockData = `[\n${Array.from({length: rows}, (_, i) => `  {
+    "id": ${i + 1},
+    "name": "User ${i + 1}",
+    "email": "user${i + 1}@example.com",
+    "active": ${Math.random() > 0.5}
+  }`).join(',\n')}\n]`;
+                } else if (dataType === 'csv') {
+                    mockData = `id,name,email,active\n${Array.from({length: rows}, (_, i) => 
+                        `${i + 1},User ${i + 1},user${i + 1}@example.com,${Math.random() > 0.5}`
+                    ).join('\n')}`;
+                } else {
+                    mockData = `-- SQL Insert Statements\n${Array.from({length: rows}, (_, i) => 
+                        `INSERT INTO users (id, name, email, active) VALUES (${i + 1}, 'User ${i + 1}', 'user${i + 1}@example.com', ${Math.random() > 0.5});`
+                    ).join('\n')}`;
+                }
+                
+                document.getElementById('generated-data').textContent = mockData;
+                
+            } catch (error) {
+                document.getElementById('generated-data').textContent = `Error: ${error.message}`;
+            } finally {
+                btn.innerHTML = originalText;
+                btn.classList.add('pulse');
+            }
+        });
+
+        // Data Balancer Functionality
+        document.getElementById('balance-data-btn').addEventListener('click', async () => {
+            const balanceType = document.getElementById('balance-type').value;
+            const data = document.getElementById('data-to-balance').value;
+            const targetColumn = document.getElementById('target-column').value;
+            
+            const btn = document.getElementById('balance-data-btn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Balancing...';
+            btn.classList.remove('pulse');
+            
+            try {
+                // Simulate API call with timeout
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                // Mock balancing results
+                let mockBalancedData = '';
+                let mockReport = '';
+                
+                if (balanceType === 'class') {
+                    mockBalancedData = data + '\n\n// Class balancing applied\n// Undersampled majority class\n// Oversampled minority class';
+                    mockReport = `Class Balance Report:\n- Before: [70% Class A, 30% Class B]\n- After: [50% Class A, 50% Class B]`;
+                } else if (balanceType === 'feature') {
+                    mockBalancedData = data + '\n\n// Feature scaling applied\n// Standardized all features (mean=0, std=1)';
+                    mockReport = `Feature Scaling Report:\n- Applied StandardScaler\n- All features now have mean=0 and std=1`;
+                } else {
+                    mockBalancedData = data + '\n\n// Data normalization applied\n// All values scaled to [0, 1] range';
+                    mockReport = `Normalization Report:\n- MinMax scaling applied\n- All features now in [0, 1] range`;
+                }
+                
+                document.getElementById('balanced-data').textContent = mockBalancedData;
+                document.getElementById('balance-report').textContent = mockReport;
+                
+            } catch (error) {
+                document.getElementById('balanced-data').textContent = `Error: ${error.message}`;
+                document.getElementById('balance-report').textContent = `Error: ${error.message}`;
+            } finally {
+                btn.innerHTML = originalText;
+                btn.classList.add('pulse');
+            }
+        });
+    </script>
+</body>
+<footer>
+    <p>© 2023 CodeCraft Optimizer | Built for Hackathon Excellence</p>
+  </footer>
+</div>
+</html>

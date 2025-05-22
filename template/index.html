@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CodeCraft Optimizer | AI-Powered Code Optimization</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #6c5ce7;
+      --secondary: #a29bfe;
+      --dark: #2d3436;
+      --light: #f5f6fa;
+      --success: #00b894;
+      --warning: #fdcb6e;
+      --danger: #d63031;
+      --code-bg: #282c34;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background-color: #0f172a;
+      color: var(--light);
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(108, 92, 231, 0.1) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(162, 155, 254, 0.1) 0%, transparent 20%),
+        linear-gradient(to bottom, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 1));
+      min-height: 100vh;
+      padding: 2rem;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+      animation: fadeIn 0.8s ease-out;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    
+    .logo i {
+      font-size: 2.5rem;
+      color: var(--primary);
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 0.5rem;
+    }
+    
+    .tagline {
+      color: var(--secondary);
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+    
+    .optimizer-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    
+    @media (max-width: 768px) {
+      .optimizer-container {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .panel {
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .panel:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    }
+    
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .panel-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .language-selector {
+      background: rgba(108, 92, 231, 0.2);
+      color: white;
+      border: 1px solid var(--primary);
+      border-radius: 6px;
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .language-selector:hover {
+      background: rgba(108, 92, 231, 0.4);
+    }
+    
+    .code-editor {
+      width: 100%;
+      min-height: 300px;
+      background: var(--code-bg);
+      border-radius: 8px;
+      padding: 1rem;
+      color: #abb2bf;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      resize: vertical;
+      margin-bottom: 1rem;
+    }
+    
+    .btn {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4);
+    }
+    
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(108, 92, 231, 0.6);
+    }
+    
+    .btn:active {
+      transform: translateY(0);
+    }
+    
+    .metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    
+    .metric-card {
+      background: rgba(30, 41, 59, 0.7);
+      border-radius: 10px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+    
+    .metric-card:hover {
+      background: rgba(44, 58, 82, 0.7);
+    }
+    
+    .metric-title {
+      font-size: 1rem;
+      color: var(--secondary);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .metric-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: white;
+    }
+    
+    .improvement {
+      font-size: 0.9rem;
+      color: var(--success);
+      margin-top: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    
+    .badge {
+      background: rgba(0, 184, 148, 0.2);
+      color: var(--success);
+      padding: 0.3rem 0.6rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    
+    .arrow {
+      color: var(--success);
+      font-size: 1.2rem;
+      margin: 0 0.5rem;
+    }
+    
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.9rem;
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+    
+    /* Syntax highlighting for code display */
+    .token.comment { color: #5c6370; font-style: italic; }
+    .token.keyword { color: #c678dd; }
+    .token.string { color: #98c379; }
+    .token.number { color: #d19a66; }
+    .token.function { color: #61afef; }
+    .token.operator { color: #56b6c2; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <i class="fas fa-code"></i>
+        <h1>CodeCraft Optimizer</h1>
+      </div>
+      <p class="tagline">AI-powered code optimization across multiple languages</p>
+    </header>
+    
+    <form id="optimizeForm">
+      <div class="optimizer-container">
+        <div class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title"><i class="fas fa-edit"></i> Your Code</h2>
+            <select id="language" class="language-selector">
+              <option value="python">Python</option>
+              <option value="js">JavaScript</option>
+              <option value="cpp">C++</option>
+              <option value="java">Java</option>
+              <option value="go">Go</option>
+              <option value="rust">Rust</option>
+            </select>
+          </div>
+          <textarea id="code" class="code-editor" placeholder="Paste your code here..."></textarea>
+          <button type="submit" class="btn pulse">
+            <i class="fas fa-bolt"></i> Optimize Code
+          </button>
+        </div>
+        
+        <div class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title"><i class="fas fa-rocket"></i> Optimized Code</h2>
+            <div class="badge" id="optimization-badge">
+              <i class="fas fa-sparkles"></i> <span id="optimization-percent">0%</span> more efficient
+            </div>
+          </div>
+          <pre id="optimized" class="code-editor" style="min-height: 300px;">// Your optimized code will appear here...</pre>
+        </div>
+      </div>
+      
+      <div class="metrics">
+        <div class="metric-card">
+          <h3 class="metric-title"><i class="fas fa-clock"></i> Time Complexity</h3>
+          <div class="metric-value" id="time">
+            <span id="before-time">O(n²)</span> 
+            <span class="arrow">→</span> 
+            <span id="after-time">O(n log n)</span>
+          </div>
+          <div class="improvement">
+            <i class="fas fa-arrow-down"></i> <span id="time-improvement">50% faster</span>
+          </div>
+        </div>
+        
+        <div class="metric-card">
+          <h3 class="metric-title"><i class="fas fa-memory"></i> Space Complexity</h3>
+          <div class="metric-value" id="space">
+            <span id="before-space">O(n)</span> 
+            <span class="arrow">→</span> 
+            <span id="after-space">O(1)</span>
+          </div>
+          <div class="improvement">
+            <i class="fas fa-arrow-down"></i> <span id="space-improvement">75% less memory</span>
+          </div>
+        </div>
+      </div>
+    </form>
+    
+    <footer>
+      <p>© 2023 CodeCraft Optimizer | Built for Hackathon Excellence</p>
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById('optimizeForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const language = document.getElementById('language').value;
+      const code = document.getElementById('code').value;
+      
+      // Show loading state
+      const btn = e.target.querySelector('button[type="submit"]');
+      const originalBtnText = btn.innerHTML;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Optimizing...';
+      btn.classList.remove('pulse');
+      
+      try {
+        const res = await fetch('http://127.0.0.1:5000/optimize', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ language, code })
+        });
+
+        const data = await res.json();
+        
+        // Update UI with results
+        document.getElementById('optimized').textContent = data.optimized_code;
+        document.getElementById('before-time').textContent = data.before_time;
+        document.getElementById('after-time').textContent = data.after_time;
+        document.getElementById('before-space').textContent = data.before_space;
+        document.getElementById('after-space').textContent = data.after_space;
+        
+        // Calculate and show improvements
+        if (data.improvement_percent) {
+          document.getElementById('optimization-percent').textContent = data.improvement_percent + '%';
+          document.getElementById('time-improvement').textContent = data.time_improvement || 'Improved';
+          document.getElementById('space-improvement').textContent = data.space_improvement || 'Improved';
+        }
+        
+        // Apply syntax highlighting (would need a library like Prism.js for real implementation)
+        applySyntaxHighlighting();
+        
+      } catch (error) {
+        console.error('Optimization failed:', error);
+        document.getElementById('optimized').textContent = 'Error: ' + error.message;
+      } finally {
+        btn.innerHTML = originalBtnText;
+        btn.classList.add('pulse');
+      }
+    });
+    
+    // This would be replaced with actual syntax highlighting library
+    function applySyntaxHighlighting() {
+      // In a real implementation, you would use a library like Prism.js
+      console.log('Applying syntax highlighting...');
+    }
+    
+    // Language selector change updates placeholder
+    document.getElementById('language').addEventListener('change', (e) => {
+      const lang = e.target.value;
+      let example = '';
+      
+      switch(lang) {
+        case 'python':
+          example = 'def factorial(n):\n    if n == 0:\n        return 1\n    return n * factorial(n-1)';
+          break;
+        case 'js':
+          example = 'function factorial(n) {\n    if (n === 0) return 1;\n    return n * factorial(n - 1);\n}';
+          break;
+        case 'cpp':
+          example = 'int factorial(int n) {\n    if (n == 0) return 1;\n    return n * factorial(n - 1);\n}';
+          break;
+        case 'java':
+          example = 'public int factorial(int n) {\n    if (n == 0) return 1;\n    return n * factorial(n - 1);\n}';
+          break;
+      }
+      
+      document.getElementById('code').placeholder = `Paste your ${lang} code here...\n\nExample:\n${example}`;
+    });
+  </script>
+</body>
+</html>
